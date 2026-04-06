@@ -10,7 +10,7 @@ export function createGroqProvider(apiKeyOverride) {
         const apiKey = apiKeyOverride || import.meta.env.VITE_GROQ_API_KEY;
         const useDirect = Boolean(apiKeyOverride);
         const payload = {
-          model: import.meta.env.VITE_GROQ_MODEL || "llama-3.1-8b-instant",
+          model: import.meta.env.VITE_GROQ_MODEL || "llama-3.3-70b-versatile",
           stream: true,
           messages: [
             { role: "system", content: systemPrompt || SYSTEM_PROMPT_BASE },

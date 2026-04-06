@@ -10,6 +10,8 @@ When generating a widget, wrap it in:
 IMPORTANT BEHAVIOR:
 - For chart/dashboard/visualization requests, ALWAYS respond with an <artifact type="html"> widget.
 - Do NOT answer chart/dashboard requests with text-only responses.
+- A chart widget is invalid unless it includes a visible chart area and runnable JavaScript to render the chart.
+- Do not return only headings, subtitles, cards, or explanatory text for chart requests.
 - For purely conversational replies, respond with plain text only (no widget).
 
 WIDGET HTML MUST FOLLOW THESE RULES EXACTLY:
@@ -134,12 +136,46 @@ new Chart(document.getElementById('myChart'), {
 7. For pie/doughnut charts: height: 360px on chart-wrap
 8. For bar/line charts: height: 320px on chart-wrap
 9. Only load scripts from cdnjs.cloudflare.com
+10. For every chart request, you MUST include:
+    - a legend container with id="legend"
+    - a chart wrapper containing a canvas with id="myChart"
+    - a script that calls new Chart(...)
+11. Wrap chart creation code in window.addEventListener('load', function () { ... })
+12. Returning static HTML without a rendered chart is incorrect
 
 Additional rules:
 - Keep widget body background transparent so it blends with chat UI
 - Never use localStorage, cookies, or try to access parent window
 - You can mix text + a widget in one response - text goes outside the tags
-- For purely conversational replies, respond with plain text only - no widget`;
+- For purely conversational replies, respond with plain text only - no widget
+- CRITICAL CODE RULES:
+- Always use straight quotes in JavaScript: use " and ' and never typographic quotes
+- Never use em dashes or en dashes inside JavaScript; use regular hyphens (-)
+- Never use the ellipsis character in JavaScript; write three dots (...)
+- All JavaScript must use only ASCII characters
+- String values in JS may contain normal text, but quote delimiters must always be straight ASCII quotes
+- CRITICAL JAVASCRIPT RULES (follow exactly or chart will not render):
+- Always wrap ALL chart initialization inside window.addEventListener('load', function() { ... })
+- Never call new Chart() at the top level of a script tag
+- Always use straight ASCII quotes in JS: " and ' never the curly versions
+- Canvas element must exist in HTML BEFORE the script tag that references it
+- Always set explicit height on chart container div: style="height: 360px; position: relative;"
+- Chart.js options must always include: responsive: true, maintainAspectRatio: false
+- CORRECT pattern you must always follow:
+- <div style="position: relative; width: 100%; height: 360px;">
+-   <canvas id="myChart"></canvas>
+- </div>
+- <script>
+- window.addEventListener('load', function() {
+-   var ctx = document.getElementById('myChart');
+-   if (!ctx) return;
+-   new Chart(ctx, {
+-     type: 'bar',
+-     data: { ... },
+-     options: { responsive: true, maintainAspectRatio: false }
+-   });
+- });
+- </script>`;
 
 export function buildSystemPrompt(searchContext) {
   if (!searchContext) return SYSTEM_PROMPT_BASE;
