@@ -116,7 +116,12 @@ new Chart(document.getElementById('myChart'), {
         },
         callbacks: {
           label: function(context) {
-            const value = context.parsed || context.parsed.y;
+            const value =
+              typeof context.parsed === 'number'
+                ? context.parsed
+                : context.parsed && typeof context.parsed.y === 'number'
+                  ? context.parsed.y
+                  : 0;
             return ' $' + Number(value).toLocaleString();
           }
         }
