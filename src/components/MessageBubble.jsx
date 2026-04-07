@@ -4,6 +4,42 @@ import { renderMarkdown } from "../lib/markdownRenderer.js";
 
 const WIDGET_SPLIT = "\n<!-- WIDGET_SPLIT -->\n";
 
+function ErrorCard({ message }) {
+  return (
+    <div className="max-w-3xl overflow-hidden rounded-2xl border border-rose-200 bg-[linear-gradient(135deg,rgba(255,241,242,0.95),rgba(255,255,255,0.96))] shadow-[0_14px_40px_rgba(244,63,94,0.08)]">
+      <div className="flex items-start gap-3 px-4 py-4">
+        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 20 20"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="10" cy="10" r="7" />
+            <path d="M10 6.5v4.5" />
+            <path d="M10 13.7h.01" />
+          </svg>
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-rose-700">
+            Response couldn't finish
+          </p>
+          <p className="mt-1 text-sm leading-6 text-rose-700/90">
+            {message.errorMessage || "Something went wrong while streaming the response."}
+          </p>
+          <p className="mt-3 text-xs font-medium uppercase tracking-[0.18em] text-rose-500">
+            Try again, switch providers, or paste your own API key in the sidebar.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function MessageBubble({ message }) {
   const isUser = message.role === "user";
   const hasText = Boolean(message.textContent?.trim());
@@ -55,11 +91,7 @@ export default function MessageBubble({ message }) {
           </div>
         ))}
 
-        {message.status === "error" ? (
-          <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-600">
-            Something went wrong while streaming the response.
-          </div>
-        ) : null}
+        {message.status === "error" ? <ErrorCard message={message} /> : null}
       </div>
     </div>
   );

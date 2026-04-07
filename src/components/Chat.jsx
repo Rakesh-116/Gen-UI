@@ -65,6 +65,11 @@ const formatAIError = (error) => {
   return "Something went wrong while generating the response. Please try again, or paste your own API key in the sidebar if the shared key is unavailable.";
 };
 
+const createErrorState = (error) => ({
+  status: "error",
+  errorMessage: formatAIError(error)
+});
+
 const extractWidgetFromText = (text) => {
   if (!text) return { text };
   let working = text;
@@ -506,7 +511,8 @@ export default function Chat({ settings }) {
       textContent: "",
       widgetHTML: null,
       status: "streaming",
-      isSearching: false
+      isSearching: false,
+      errorMessage: ""
     };
 
     setMessages((prev) => [...prev, userMessage, assistantMessage]);
@@ -570,10 +576,15 @@ export default function Chat({ settings }) {
         apiKey: providerKey,
         onText: (chunk) => parser.processChunk(chunk),
         onError: (error) => {
-          updateStatus(assistantId, "error");
-          appendText(
-            assistantId,
-            `\n\n[Error] ${formatAIError(error)}`
+          setMessages((prev) =>
+            prev.map((message) =>
+              message.id === assistantId
+                ? {
+                    ...message,
+                    ...createErrorState(error)
+                  }
+                : message
+            )
           );
           setIsSending(false);
         },
@@ -588,10 +599,15 @@ export default function Chat({ settings }) {
         }
       });
     } catch (error) {
-      updateStatus(assistantId, "error");
-      appendText(
-        assistantId,
-        `\n\n[Error] ${formatAIError(error)}`
+      setMessages((prev) =>
+        prev.map((message) =>
+          message.id === assistantId
+            ? {
+                ...message,
+                ...createErrorState(error)
+              }
+            : message
+        )
       );
       setIsSending(false);
     }
