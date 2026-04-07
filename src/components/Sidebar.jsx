@@ -29,6 +29,38 @@ const PROVIDERS = [
   }
 ];
 
+function ExternalLinkIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 20 20"
+      className="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M7 5h8v8" />
+      <path d="M15 5 5 15" />
+    </svg>
+  );
+}
+
+function HelpLink({ href, children }) {
+  return (
+    <a
+      className="inline-flex items-center gap-1.5 text-xs text-slate-500 underline-offset-2 hover:text-slate-700 hover:underline"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <span>{children}</span>
+      <ExternalLinkIcon />
+    </a>
+  );
+}
+
 export default function Sidebar({ settings, onChange }) {
   const showOllama =
     (import.meta.env.VITE_ENABLE_OLLAMA || "false").toLowerCase() === "true";
@@ -66,14 +98,9 @@ export default function Sidebar({ settings, onChange }) {
           value={settings.tavilyKey}
           onChange={(event) => onChange({ tavilyKey: event.target.value })}
         />
-        <a
-          className="text-xs text-slate-500 underline-offset-2 hover:text-slate-700 hover:underline"
-          href="https://app.tavily.com/home"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <HelpLink href="https://app.tavily.com/home">
           Get a Tavily API key
-        </a>
+        </HelpLink>
       </div>
 
       <div className="space-y-3">
@@ -92,14 +119,9 @@ export default function Sidebar({ settings, onChange }) {
           ))}
         </select>
         {activeProvider ? (
-          <a
-            className="text-xs text-slate-500 underline-offset-2 hover:text-slate-700 hover:underline"
-            href={activeProvider.link}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <HelpLink href={activeProvider.link}>
             Get a {activeProvider.label} API key
-          </a>
+          </HelpLink>
         ) : null}
       </div>
 

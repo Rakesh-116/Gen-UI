@@ -31,9 +31,14 @@ const formatAIError = (error) => {
     lower.includes("rate limit") ||
     lower.includes("rate_limit") ||
     lower.includes("tokens per minute") ||
-    lower.includes("tpm")
+    lower.includes("tpm") ||
+    lower.includes("429") ||
+    lower.includes("quota") ||
+    lower.includes("insufficient_quota") ||
+    lower.includes("credit") ||
+    lower.includes("billing")
   ) {
-    return "Rate limit reached for the current model. Please wait a moment and try again.";
+    return "The current AI key has hit its limit or quota. Please try again in a moment, switch providers, or enter your own API key in the sidebar.";
   }
 
   if (
@@ -45,10 +50,19 @@ const formatAIError = (error) => {
   }
 
   if (lower.includes("401") || lower.includes("unauthorized")) {
-    return "Authentication failed. Please check the selected provider API key.";
+    return "Authentication failed for the selected provider. Please check the API key in the sidebar or paste a different key.";
   }
 
-  return "Something went wrong while generating the response. Please try again.";
+  if (
+    lower.includes("404") ||
+    lower.includes("not found") ||
+    lower.includes("no such model") ||
+    lower.includes("model")
+  ) {
+    return "The selected model or provider endpoint could not be reached. Try switching providers or updating the API key and model settings.";
+  }
+
+  return "Something went wrong while generating the response. Please try again, or paste your own API key in the sidebar if the shared key is unavailable.";
 };
 
 const extractWidgetFromText = (text) => {
