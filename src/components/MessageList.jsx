@@ -10,7 +10,7 @@ export default function MessageList({ messages }) {
   }, [messages]);
 
   return (
-    <div className="flex h-full flex-col gap-6 overflow-y-auto px-2 py-4 md:px-6 md:py-6">
+    <div className="flex h-full flex-col gap-5 overflow-y-auto px-0 py-3 sm:gap-6 sm:px-2 sm:py-4 md:px-6 md:py-6">
       {messages.map((message) => (
         <MessageBubble key={message.id} message={message} />
       ))}

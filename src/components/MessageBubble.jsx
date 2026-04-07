@@ -49,7 +49,7 @@ export default function MessageBubble({ message }) {
   if (isUser) {
     return (
       <div className="flex w-full justify-end">
-        <div className="max-w-[70%] rounded-2xl bg-slate-900 px-5 py-4 text-white shadow-sm">
+        <div className="max-w-[92%] rounded-2xl bg-slate-900 px-4 py-3 text-white shadow-sm sm:max-w-[80%] sm:px-5 sm:py-4 lg:max-w-[70%]">
           {hasText ? (
             <div
               className="markdown text-sm leading-relaxed text-white"
@@ -66,7 +66,7 @@ export default function MessageBubble({ message }) {
       <div className="w-full space-y-4 text-slate-900">
         {hasText ? (
           <div
-            className="markdown max-w-3xl text-sm leading-relaxed text-slate-800"
+            className="markdown max-w-full text-sm leading-relaxed text-slate-800 sm:max-w-3xl"
             dangerouslySetInnerHTML={{ __html: renderMarkdown(message.textContent) }}
           />
         ) : null}
@@ -86,7 +86,7 @@ export default function MessageBubble({ message }) {
         ) : null}
 
         {widgets.map((widget, index) => (
-          <div key={`${message.id}-widget-${index}`} className="w-full max-w-5xl">
+          <div key={`${message.id}-widget-${index}`} className="w-full max-w-full sm:max-w-5xl">
             <WidgetRenderer html={widget} />
           </div>
         ))}

@@ -50,14 +50,14 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-transparent text-slate-900">
-      <div className="flex h-full">
-        <aside className="w-[300px] shrink-0 border-r border-slate-200/60">
-          <div className="sticky top-0 h-screen overflow-y-auto">
+    <div className="min-h-screen bg-transparent text-slate-900">
+      <div className="flex min-h-screen flex-col lg:h-screen lg:flex-row">
+        <aside className="w-full shrink-0 border-b border-slate-200/60 lg:w-[300px] lg:border-b-0 lg:border-r">
+          <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
             <Sidebar settings={settings} onChange={handleSettingsChange} />
           </div>
         </aside>
-        <main className="flex-1 overflow-y-auto">
+        <main className="min-h-0 flex-1 lg:overflow-y-auto">
           <Chat settings={settings} />
         </main>
       </div>

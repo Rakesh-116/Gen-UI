@@ -74,7 +74,7 @@ export default function Sidebar({ settings, onChange }) {
   const providerLabel = activeProvider?.label || "Provider";
 
   return (
-    <aside className="flex h-full w-full flex-col gap-6 border-r border-slate-200/70 bg-white/70 px-5 py-6 text-sm text-slate-700 backdrop-blur">
+    <aside className="flex h-full w-full flex-col gap-6 bg-white/70 px-4 py-5 text-sm text-slate-700 backdrop-blur sm:px-5 sm:py-6">
       <div>
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
           Keys & Providers

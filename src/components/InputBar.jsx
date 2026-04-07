@@ -21,7 +21,7 @@ export default function InputBar({ onSend, disabled }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-6 flex items-end gap-3 rounded-2xl border border-slate-200 bg-white/90 p-3 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
+      className="mt-4 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/90 p-3 shadow-[0_10px_30px_rgba(15,23,42,0.08)] sm:mt-6 sm:flex-row sm:items-end"
     >
       <textarea
         value={value}
@@ -29,13 +29,13 @@ export default function InputBar({ onSend, disabled }) {
         onKeyDown={handleKeyDown}
         placeholder="Ask for a chart, dashboard, or calculation..."
         rows={2}
-        className="min-h-[44px] flex-1 resize-none bg-transparent px-3 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400"
+        className="min-h-[96px] w-full flex-1 resize-none bg-transparent px-2 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400 sm:min-h-[44px] sm:px-3"
         disabled={disabled}
       />
       <button
         type="submit"
         disabled={disabled}
-        className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400 sm:w-auto sm:py-2"
       >
         Send
       </button>

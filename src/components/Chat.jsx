@@ -614,22 +614,22 @@ export default function Chat({ settings }) {
   };
 
   return (
-    <div className="flex h-full flex-col px-10 pb-10 pt-8">
-      <div className="mb-6">
+    <div className="flex min-h-[calc(100vh-1px)] flex-col px-4 pb-6 pt-5 sm:px-6 sm:pb-8 sm:pt-6 lg:h-full lg:min-h-0 lg:px-10 lg:pb-10 lg:pt-8">
+      <div className="mb-5 sm:mb-6">
         <p className="text-xs uppercase tracking-[0.35em] text-slate-500">
           Generative UI Chat
         </p>
-        <h1 className="mt-2 font-display text-2xl font-semibold text-slate-900">
+        <h1 className="mt-2 font-display text-xl font-semibold text-slate-900 sm:text-2xl">
           Inline Widgets
         </h1>
-        <p className="mt-2 max-w-2xl text-sm text-slate-600">
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
           Ask for charts, dashboards, or interactive widgets and watch them render
           inside the conversation.
         </p>
       </div>
-      <div className="flex-1 overflow-hidden">
+      <div className="min-h-0 flex-1 overflow-hidden">
         {showStarters ? (
-          <div className="mb-6">
+          <div className="mb-5 sm:mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">
               Try a prompt
             </p>
@@ -639,7 +639,7 @@ export default function Chat({ settings }) {
                   key={prompt}
                   type="button"
                   onClick={() => handleSend(prompt)}
-                  className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-medium text-slate-600 transition hover:border-slate-400 hover:text-slate-900"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-xs font-medium text-slate-600 transition hover:border-slate-400 hover:text-slate-900 sm:w-auto sm:rounded-full sm:py-2"
                 >
                   {prompt}
                 </button>
